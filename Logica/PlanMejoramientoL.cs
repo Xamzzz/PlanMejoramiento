@@ -33,5 +33,33 @@ namespace PlanMejoramiento.Logica
         {
             datos.Eliminar(id);
         }
+        public int ObtenerInstructorDelPlan(
+    int idPlan)
+        {
+            return datos.ObtenerInstructorDelPlan(
+                idPlan);
+        }
+        public List<ConsultaGestionAcademica>
+    ConsultarGestionAcademica()
+        {
+            return datos
+                .ConsultarGestionAcademica();
+        }
+
+        public void ActualizarEstado(
+    int idPlan,
+    int idEstado)
+        {
+
+            datos.ActualizarEstado(
+                idPlan,
+                idEstado);
+        }
+        public Modelo.PlanMejoramiento
+    ObtenerPorId(int idPlan)
+        {
+            return datos.ObtenerPorId(
+                idPlan);
+        }
     }
 }

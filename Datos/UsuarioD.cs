@@ -171,6 +171,8 @@ namespace PlanMejoramiento.Datos
 
         public int InsertarRetornandoId(Usuario u)
         {
+            int id = 0;
+
             using (SqlConnection cn =
                 ConexionDB.MtAbrirConexion())
             {
@@ -192,7 +194,7 @@ namespace PlanMejoramiento.Datos
             1
         );
 
-        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        SELECT SCOPE_IDENTITY();";
 
                 SqlCommand cmd =
                     new SqlCommand(sql, cn);
@@ -209,7 +211,11 @@ namespace PlanMejoramiento.Datos
                     "@IdRol",
                     u.IdRol);
 
-                return (int)cmd.ExecuteScalar();
+                id =
+                    Convert.ToInt32(
+                        cmd.ExecuteScalar());
+
+                return id;
             }
         }
 

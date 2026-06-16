@@ -14,11 +14,16 @@ namespace PlanMejoramiento.Vista
         ProgramaL logica = new ProgramaL();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Rol"] == null)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
             if (!IsPostBack)
             {
                 CargarGrid();
             }
-
         }
         private void CargarGrid()
         {

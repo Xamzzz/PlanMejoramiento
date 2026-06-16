@@ -1,242 +1,212 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Instructor.aspx.cs" Inherits="PlanMejoramiento.Vista.Instructor" %>
+﻿<%@ Page Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
+    CodeBehind="Instructor.aspx.cs"
+    Inherits="PlanMejoramiento.Vista.Instructor" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="sidebar">
+    <h2>Gestión de Instructores</h2>
 
-<h2>Plan Mejoramiento</h2>
+    <asp:HiddenField
+        ID="hfIdInstructor"
+        runat="server" />
 
-<a href="Inicio.aspx">🏠 Inicio</a>
+    <asp:HiddenField
+        ID="hfIdUsuario"
+        runat="server" />
 
+    <table>
 
-<a href="Aprendiz.aspx">👨‍🎓 Aprendices</a>
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblTipoDocumento"
+                    runat="server"
+                    Text="Tipo Documento:">
+                </asp:Label>
+            </td>
 
-<a href="AprendizFichas.aspx">📚 Aprendiz - Ficha</a>
+            <td>
+                <asp:DropDownList
+                    ID="ddlTipoDocumento"
+                    runat="server">
+                </asp:DropDownList>
+            </td>
+        </tr>
 
-<a href="Fichas.aspx">📋 Fichas</a>
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblNumeroDocumento"
+                    runat="server"
+                    Text="Número Documento:">
+                </asp:Label>
+            </td>
 
+            <td>
+                <asp:TextBox
+                    ID="txtNumeroDocumento"
+                    runat="server">
+                </asp:TextBox>
+            </td>
+        </tr>
 
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblNombres"
+                    runat="server"
+                    Text="Nombres:">
+                </asp:Label>
+            </td>
 
+            <td>
+                <asp:TextBox
+                    ID="txtNombres"
+                    runat="server">
+                </asp:TextBox>
+            </td>
+        </tr>
 
-<a href="PlanMejoramientos.aspx">📈 Planes</a>
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblApellidos"
+                    runat="server"
+                    Text="Apellidos:">
+                </asp:Label>
+            </td>
 
-<a href="Evidencias.aspx">📂 Evidencias</a>
+            <td>
+                <asp:TextBox
+                    ID="txtApellidos"
+                    runat="server">
+                </asp:TextBox>
+            </td>
+        </tr>
 
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblCorreo"
+                    runat="server"
+                    Text="Correo:">
+                </asp:Label>
+            </td>
 
+            <td>
+                <asp:TextBox
+                    ID="txtCorreo"
+                    runat="server">
+                </asp:TextBox>
+            </td>
+        </tr>
 
-<a href="Login.aspx">🚪 Salir</a>
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblTelefono"
+                    runat="server"
+                    Text="Teléfono:">
+                </asp:Label>
+            </td>
 
-</div>
-        <div>
+            <td>
+                <asp:TextBox
+                    ID="txtTelefono"
+                    runat="server">
+                </asp:TextBox>
+            </td>
+        </tr>
 
-            <h2>Gestión de Instructores</h2>
+        <tr>
+            <td>
+                <asp:Label
+                    ID="lblEspecialidad"
+                    runat="server"
+                    Text="Especialidad:">
+                </asp:Label>
+            </td>
 
-            <asp:HiddenField
-                ID="hfIdInstructor"
-                runat="server" />
+            <td>
+                <asp:TextBox
+                    ID="txtEspecialidad"
+                    runat="server">
+                </asp:TextBox>
+            </td>
+        </tr>
 
-            <asp:HiddenField
-                ID="hfIdUsuario"
-                runat="server" />
+        <tr>
+            <td colspan="2">
 
-            <table>
+                <br />
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblTipoDocumento"
-                            runat="server"
-                            Text="Tipo Documento:">
-                        </asp:Label>
-                    </td>
+                <asp:Button
+                    ID="btnActualizar"
+                    runat="server"
+                    Text="Actualizar"
+                    OnClick="btnActualizar_Click" />
 
-                    <td>
-                        <asp:DropDownList
-                            ID="ddlTipoDocumento"
-                            runat="server">
-                        </asp:DropDownList>
-                    </td>
-                </tr>
+            </td>
+        </tr>
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblNumeroDocumento"
-                            runat="server"
-                            Text="Número Documento:">
-                        </asp:Label>
-                    </td>
+    </table>
 
-                    <td>
-                        <asp:TextBox
-                            ID="txtNumeroDocumento"
-                            runat="server">
-                        </asp:TextBox>
-                    </td>
-                </tr>
+    <br />
+    <hr />
+    <br />
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblNombres"
-                            runat="server"
-                            Text="Nombres:">
-                        </asp:Label>
-                    </td>
+    <asp:GridView
+        ID="gvInstructores"
+        runat="server"
+        AutoGenerateColumns="False"
+        DataKeyNames="IdInstructor,IdUsuario"
+        OnSelectedIndexChanged="gvInstructores_SelectedIndexChanged"
+        OnRowDeleting="gvInstructores_RowDeleting">
 
-                    <td>
-                        <asp:TextBox
-                            ID="txtNombres"
-                            runat="server">
-                        </asp:TextBox>
-                    </td>
-                </tr>
+        <Columns>
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblApellidos"
-                            runat="server"
-                            Text="Apellidos:">
-                        </asp:Label>
-                    </td>
+            <asp:BoundField
+                DataField="TipoDocumento"
+                HeaderText="Tipo Documento" />
 
-                    <td>
-                        <asp:TextBox
-                            ID="txtApellidos"
-                            runat="server">
-                        </asp:TextBox>
-                    </td>
-                </tr>
+            <asp:BoundField
+                DataField="NumeroDocumento"
+                HeaderText="Documento" />
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblCorreo"
-                            runat="server"
-                            Text="Correo:">
-                        </asp:Label>
-                    </td>
+            <asp:BoundField
+                DataField="Nombres"
+                HeaderText="Nombres" />
 
-                    <td>
-                        <asp:TextBox
-                            ID="txtCorreo"
-                            runat="server">
-                        </asp:TextBox>
-                    </td>
-                </tr>
+            <asp:BoundField
+                DataField="Apellidos"
+                HeaderText="Apellidos" />
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblTelefono"
-                            runat="server"
-                            Text="Teléfono:">
-                        </asp:Label>
-                    </td>
+            <asp:BoundField
+                DataField="Correo"
+                HeaderText="Correo" />
 
-                    <td>
-                        <asp:TextBox
-                            ID="txtTelefono"
-                            runat="server">
-                        </asp:TextBox>
-                    </td>
-                </tr>
+            <asp:BoundField
+                DataField="Telefono"
+                HeaderText="Teléfono" />
 
-                <tr>
-                    <td>
-                        <asp:Label
-                            ID="lblEspecialidad"
-                            runat="server"
-                            Text="Especialidad:">
-                        </asp:Label>
-                    </td>
+            <asp:BoundField
+                DataField="Especialidad"
+                HeaderText="Especialidad" />
 
-                    <td>
-                        <asp:TextBox
-                            ID="txtEspecialidad"
-                            runat="server">
-                        </asp:TextBox>
-                    </td>
-                </tr>
+            <asp:BoundField
+                DataField="Usuario"
+                HeaderText="Usuario" />
 
-                <tr>
-                    <td colspan="2">
-                        <br />
+            <asp:CommandField
+                ShowSelectButton="True"
+                ShowDeleteButton="True" />
 
-                        <asp:Button
-                            ID="btnActualizar"
-                            runat="server"
-                            Text="Actualizar"
-                            OnClick="btnActualizar_Click" />
+        </Columns>
 
-                    </td>
-                </tr>
+    </asp:GridView>
 
-            </table>
-
-            <br />
-            <hr />
-            <br />
-
-            <asp:GridView
-                ID="gvInstructores"
-                runat="server"
-                AutoGenerateColumns="False"
-                DataKeyNames="IdInstructor, IdUsuario"
-                OnSelectedIndexChanged="gvInstructores_SelectedIndexChanged"
-                OnRowDeleting="gvInstructores_RowDeleting">
-
-                <Columns>
-
-                    <asp:BoundField
-                        DataField="TipoDocumento"
-                        HeaderText="Tipo Documento" />
-
-                    <asp:BoundField
-                        DataField="NumeroDocumento"
-                        HeaderText="Documento" />
-
-                    <asp:BoundField
-                        DataField="Nombres"
-                        HeaderText="Nombres" />
-
-                    <asp:BoundField
-                        DataField="Apellidos"
-                        HeaderText="Apellidos" />
-
-                    <asp:BoundField
-                        DataField="Correo"
-                        HeaderText="Correo" />
-
-                    <asp:BoundField
-                        DataField="Telefono"
-                        HeaderText="Teléfono" />
-
-                    <asp:BoundField
-                        DataField="Especialidad"
-                        HeaderText="Especialidad" />
-
-                    <asp:BoundField
-                        DataField="Usuario"
-                        HeaderText="Usuario" />
-
-                    <asp:CommandField
-                        ShowSelectButton="True"
-                        ShowDeleteButton="True" />
-
-                </Columns>
-
-            </asp:GridView>
-
-        </div>
-    </form>
-</body>
-</html>
+</asp:Content>

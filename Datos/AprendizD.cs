@@ -345,7 +345,6 @@ namespace PlanMejoramiento.Datos
                     "@IdEstadoAprendiz",
                     a.IdEstadoAprendiz);
 
-                // ESTA PARTE ES LA IMPORTANTE
                 if (a.IdUsuario == 0)
                 {
                     cmd.Parameters.AddWithValue(
@@ -360,6 +359,54 @@ namespace PlanMejoramiento.Datos
                 }
 
                 return (int)cmd.ExecuteScalar();
+            }
+        }
+
+        public bool ExisteDocumento(string documento)
+        {
+            using (SqlConnection cn = ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"SELECT COUNT(*) 
+                       FROM Aprendiz 
+                       WHERE NumeroDocumento = @doc";
+
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cmd.Parameters.AddWithValue("@doc", documento);
+
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
+        public void CambiarEstado(
+    int idAprendiz,
+    int idEstado)
+        {
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+        UPDATE Aprendiz
+        SET IdEstadoAprendiz =
+            @IdEstado
+        WHERE IdAprendiz =
+            @IdAprendiz";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdEstado",
+                    idEstado);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdAprendiz",
+                    idAprendiz);
+
+                cmd.ExecuteNonQuery();
             }
         }
 

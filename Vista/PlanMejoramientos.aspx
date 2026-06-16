@@ -1,174 +1,163 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Title="Planes de Mejoramiento"
+    Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
     CodeBehind="PlanMejoramientos.aspx.cs"
     Inherits="PlanMejoramiento.Vista.PlanMejoramientos" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html>
-<head runat="server">
-    <title>Plan de Mejoramiento</title>
-</head>
-<body>
-
-    <form id="form1" runat="server">
-        <div class="sidebar">
-
-<h2>Plan Mejoramiento</h2>
-
-<a href="Inicio.aspx">🏠 Inicio</a>
-
-<a href="Usuarios.aspx">👤 Usuarios</a>
-
-
-
-<a href="Login.aspx">🚪 Salir</a>
-
-</div>
-
-        <h2>Plan de Mejoramiento</h2>
-
-        Fecha Asignación
+    <h2>Plan de Mejoramiento</h2>
 
     <br />
 
-        <asp:TextBox
-            ID="txtFechaAsignacion"
-            runat="server"
-            TextMode="Date">
-        </asp:TextBox>
-
-        <br />
-        <br />
-
-        Actividades
+    Fecha Asignación
 
     <br />
 
-        <asp:TextBox
-            ID="txtActividades"
-            runat="server"
-            TextMode="MultiLine"
-            Width="400px"
-            Height="80px">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtFechaAsignacion"
+        runat="server"
+        TextMode="Date">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br /><br />
 
-        Observaciones
+    Actividades
 
     <br />
 
-        <asp:TextBox
-            ID="txtObservaciones"
-            runat="server"
-            TextMode="MultiLine"
-            Width="400px"
-            Height="80px">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtActividades"
+        runat="server"
+        TextMode="MultiLine"
+        Width="400px"
+        Height="80px">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br /><br />
 
-        Fecha Límite
-
-    <br />
-
-        <asp:TextBox
-            ID="txtFechaLimite"
-            runat="server"
-            TextMode="Date">
-        </asp:TextBox>
-
-        <br />
-        <br />
-
-        Tipo Plan
+    Observaciones
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlTipoPlan"
-            runat="server">
-        </asp:DropDownList>
+    <asp:TextBox
+        ID="txtObservaciones"
+        runat="server"
+        TextMode="MultiLine"
+        Width="400px"
+        Height="80px">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br /><br />
 
-        Estado Plan
-
-    <br />
-
-        <asp:DropDownList
-            ID="ddlEstadoPlan"
-            runat="server">
-        </asp:DropDownList>
-
-        <br />
-        <br />
-
-        Aprendiz
+    Fecha Límite
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlAprendizFicha"
-            runat="server">
-        </asp:DropDownList>
+    <asp:TextBox
+        ID="txtFechaLimite"
+        runat="server"
+        TextMode="Date">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br /><br />
 
-        Instructor
+    Tipo Plan
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlInstructor"
-            runat="server">
-        </asp:DropDownList>
+    <asp:DropDownList
+        ID="ddlTipoPlan"
+        runat="server">
+    </asp:DropDownList>
 
-        <br />
-        <br />
+    <br /><br />
 
-        <asp:Button
-            ID="btnGuardar"
-            runat="server"
-            Text="Guardar"
-            OnClick="btnGuardar_Click" />
+    Estado Plan
 
-        <br />
-        <br />
+    <br />
 
-        <asp:TemplateField HeaderText="Acciones">
+    <asp:DropDownList
+        ID="ddlEstadoPlan"
+        runat="server">
+    </asp:DropDownList>
 
-    <ItemTemplate>
+    <br /><br />
 
-        <asp:Button
-            ID="btnEditar"
-            runat="server"
-            Text="Editar"
-            CommandName="Editar"
-            CommandArgument='<%# Eval("IdPlan") %>' />
+    Aprendiz
 
-        <asp:Button
-            ID="btnEliminar"
-            runat="server"
-            Text="Eliminar"
-            CommandName="Eliminar"
-            CommandArgument='<%# Eval("IdPlan") %>' />
+    <br />
 
-    </ItemTemplate>
+    <asp:DropDownList
+        ID="ddlAprendizFicha"
+        runat="server">
+    </asp:DropDownList>
 
-</asp:TemplateField>
+    <br /><br />
 
-        <asp:GridView
-            ID="gvPlanes"
-            runat="server"
-            AutoGenerateColumns="true">
-        </asp:GridView>
+    Instructor
 
-    </form>
+    <br />
 
-</body>
-</html>
+    <asp:DropDownList
+        ID="ddlInstructor"
+        runat="server">
+    </asp:DropDownList>
+
+    <br /><br />
+
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar"
+        OnClick="btnGuardar_Click" />
+
+    <br /><br />
+
+    <asp:GridView
+        ID="gvPlanes"
+        runat="server"
+        AutoGenerateColumns="False"
+        OnRowCommand="gvPlanes_RowCommand">
+
+        <Columns>
+
+            <asp:BoundField
+                DataField="IdPlan"
+                HeaderText="ID" />
+
+            <asp:BoundField
+                DataField="FechaAsignacion"
+                HeaderText="Fecha Asignación" />
+
+            <asp:BoundField
+                DataField="Actividades"
+                HeaderText="Actividades" />
+
+            <asp:BoundField
+                DataField="FechaLimite"
+                HeaderText="Fecha Límite" />
+
+            <asp:TemplateField HeaderText="Acciones">
+
+                <ItemTemplate>
+
+                    <asp:Button
+                        ID="btnEliminar"
+                        runat="server"
+                        Text="Eliminar"
+                        CommandName="Eliminar"
+                        CommandArgument='<%# Eval("IdPlan") %>' />
+
+                </ItemTemplate>
+
+            </asp:TemplateField>
+
+        </Columns>
+
+    </asp:GridView>
+
+</asp:Content>

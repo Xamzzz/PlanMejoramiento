@@ -1,0 +1,203 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true"
+    CodeBehind="Site1.Master.cs"
+    Inherits="PlanMejoramiento.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Plan de Mejoramiento SENA</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Segoe UI;
+            background: #f5f6fa;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #198754;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow: auto;
+        }
+
+            .sidebar h2 {
+                color: white;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .sidebar a {
+                display: block;
+                color: white;
+                text-decoration: none;
+                padding: 15px;
+            }
+
+                .sidebar a:hover {
+                    background: #157347;
+                }
+
+        .contenido {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .usuario {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px #ccc;
+        }
+    </style>
+
+    <asp:ContentPlaceHolder
+        ID="head"
+        runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+
+<body>
+
+    <form runat="server">
+
+        <div class="sidebar">
+
+            <h2>Plan Mejoramiento</h2>
+
+            <asp:HyperLink
+                ID="lnkInicio"
+                runat="server"
+                NavigateUrl="~/Vista/Inicio.aspx">
+        🏠 Inicio
+            </asp:HyperLink>
+
+
+            <asp:HyperLink
+                ID="lnkUsuarios"
+                runat="server"
+                NavigateUrl="~/Vista/Usuarios.aspx">
+👤 Usuarios
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkAprendices"
+                runat="server"
+                NavigateUrl="~/Vista/Aprendiz.aspx">
+🎓 Aprendices
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkAprendizFicha"
+                runat="server"
+                NavigateUrl="~/Vista/AprendizFichas.aspx">
+    📚 Aprendiz - Ficha
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkFichas"
+                runat="server"
+                NavigateUrl="~/Vista/Fichas.aspx">
+📚 Fichas
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkInstructores"
+                runat="server"
+                NavigateUrl="~/Vista/Instructor.aspx">
+👨‍🏫 Instructores
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkProgramas"
+                runat="server"
+                NavigateUrl="~/Vista/Programas.aspx">
+📖 Programas
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkInstructorFicha"
+                runat="server"
+                NavigateUrl="~/Vista/InstructorFcihas.aspx">
+    📝 Instructor - Ficha
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkPlanes"
+                runat="server"
+                NavigateUrl="~/Vista/PlanMejoramientos.aspx">
+📋 Planes
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkEvaluacion"
+                runat="server"
+                NavigateUrl="~/Vista/EvaluacionPlan.aspx">
+    ✅ Evaluación Plan
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkGestionAcademica"
+                runat="server"
+                NavigateUrl="~/Vista/GestionAcademica.aspx">
+    📋 Gestión Académica
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkGestionAcademicaCRUD"
+                runat="server"
+                NavigateUrl="~/Vista/GestionAcademicaCRUD.aspx">
+👨‍💼 Gestión Académica
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkEvidencias"
+                runat="server"
+                NavigateUrl="~/Vista/Evidencias.aspx">
+📁 Evidencias
+            </asp:HyperLink>
+
+            <asp:HyperLink
+                ID="lnkCargaMasiva"
+                runat="server"
+                NavigateUrl="~/Vista/CargaMasivaAprendiz.aspx">
+📥 Carga Masiva
+            </asp:HyperLink>
+
+
+            <asp:LinkButton
+                ID="btnSalir"
+                runat="server"
+                OnClick="btnSalir_Click">
+        🚪 Cerrar Sesión
+            </asp:LinkButton>
+        </div>
+
+        <div class="contenido">
+
+            <div class="usuario">
+                Bienvenido:
+        <asp:Label
+            ID="lblUsuario"
+            runat="server">
+        </asp:Label>
+
+            </div>
+
+            <asp:ContentPlaceHolder
+                ID="MainContent"
+                runat="server">
+            </asp:ContentPlaceHolder>
+
+        </div>
+
+    </form>
+
+</body>
+</html>

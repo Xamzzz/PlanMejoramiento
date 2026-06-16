@@ -45,5 +45,35 @@ namespace PlanMejoramiento.Datos
 
             return lista;
         }
+
+        public int ObtenerIdEnFormacion()
+        {
+            int id = 0;
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                string sql =
+                    @"SELECT IdEstadoAprendiz
+              FROM EstadoAprendiz
+              WHERE NombreEstado =
+              'En Formación'";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cn.Open();
+
+                object resultado =
+                    cmd.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    id = Convert.ToInt32(resultado);
+                }
+            }
+
+            return id;
+        }
     }
 }

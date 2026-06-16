@@ -1,71 +1,57 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Title="Instructor - Ficha"
+    Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
     CodeBehind="InstructorFcihas.aspx.cs"
     Inherits="PlanMejoramiento.Vista.InstructorFcihas" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html>
-<head runat="server">
-    <title>Instructor Ficha</title>
-</head>
-<body>
+    <h2>Asignar Instructor a Ficha</h2>
 
-    <form id="form1" runat="server">
-
-        <div class="sidebar">
-
-<h2>Plan Mejoramiento</h2>
-
-<a href="Inicio.aspx">🏠 Inicio</a>
-
-
-
-<a href="Login.aspx">🚪 Salir</a>
-
-</div>
-        <h2>Asignar Instructor a Ficha</h2>
-
-        Instructor
+    Instructor
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlInstructor"
-            runat="server"
-            Width="300px">
-        </asp:DropDownList>
+    <asp:DropDownList
+        ID="ddlInstructor"
+        runat="server"
+        Width="300px">
+    </asp:DropDownList>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Ficha
+    Ficha
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlFicha"
-            runat="server"
-            Width="300px">
-        </asp:DropDownList>
+    <asp:DropDownList
+        ID="ddlFicha"
+        runat="server"
+        Width="300px">
+    </asp:DropDownList>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:Button
-            ID="btnGuardar"
-            runat="server"
-            Text="Guardar"
-            OnClick="btnGuardar_Click" />
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar"
+        OnClick="btnGuardar_Click" />
 
-        <hr />
+    <br />
+    <br />
 
-        <asp:GridView
-            ID="gvDatos"
-            runat="server"
-            AutoGenerateColumns="true">
-        </asp:GridView>
+    <hr />
 
-    </form>
+    <asp:GridView
+        ID="gvDatos"
+        runat="server"
+        AutoGenerateColumns="true">
+    </asp:GridView>
 
-</body>
-</html>
+</asp:Content>

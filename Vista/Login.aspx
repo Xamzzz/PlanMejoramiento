@@ -7,59 +7,104 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="../Styles/estilos.css" />
     <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI';
+            background: #198754;
+        }
+
+        .login-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.2);
+            text-align: center;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #198754;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+            .btn-login:hover {
+                background: #157347;
+            }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="sidebar">
 
-<h2>Plan Mejoramiento</h2>
+        <div class="login-container">
 
+            <div class="login-card">
 
+                <h1>Plan de Mejoramiento SENA</h1>
 
-</div>
-        <div>
-            <asp:Label ID="Label1"
-                runat="server"
-                Text="Usuario">
-            </asp:Label>
+                <p>Iniciar Sesión</p>
 
-            <br />
+                <asp:TextBox
+                    ID="txtUsuario"
+                    runat="server"
+                    CssClass="input"
+                    placeholder="Usuario">
+                </asp:TextBox>
 
-            <asp:TextBox ID="txtUsuario"
-                runat="server">
-            </asp:TextBox>
+                <br />
 
-            <br />
-            <br />
+                <asp:TextBox
+                    ID="txtClave"
+                    runat="server"
+                    CssClass="input"
+                    TextMode="Password"
+                    placeholder="Contraseña">
+                </asp:TextBox>
 
-            <asp:Label ID="Label2"
-                runat="server"
-                Text="Contraseña">
-            </asp:Label>
+                <br />
 
-            <br />
+                <asp:Button
+                    ID="btnIngresar"
+                    runat="server"
+                    CssClass="btn-login"
+                    Text="Ingresar"
+                    OnClick="btnIngresar_Click" />
 
-            <asp:TextBox ID="txtClave"
-                runat="server"
-                TextMode="Password">
-            </asp:TextBox>
+                <br />
+                <br />
 
-            <br />
-            <br />
+                <asp:Label
+                    ID="lblMensaje"
+                    runat="server"
+                    ForeColor="Red">
+                </asp:Label>
 
-            <asp:Button ID="btnIngresar"
-                runat="server"
-                Text="Ingresar"
-                OnClick="btnIngresar_Click" />
+            </div>
 
-            <br />
-            <br />
-
-            <asp:Label ID="lblMensaje"
-                runat="server"
-                ForeColor="Red">
-            </asp:Label>
         </div>
+
     </form>
 </body>
 </html>

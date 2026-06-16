@@ -196,5 +196,41 @@ namespace PlanMejoramiento.Datos
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public int ObtenerAprendizPorFicha(
+    int idAprendizFicha)
+        {
+            int idAprendiz = 0;
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+        SELECT IdAprendiz
+        FROM AprendizFicha
+        WHERE Id = @Id";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@Id",
+                    idAprendizFicha);
+
+                object resultado =
+                    cmd.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idAprendiz =
+                        Convert.ToInt32(
+                            resultado);
+                }
+            }
+
+            return idAprendiz;
+        }
     }
 }

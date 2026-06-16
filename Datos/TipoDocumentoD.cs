@@ -53,5 +53,39 @@ namespace PlanMejoramiento.Datos
 
             return lista;
         }
+
+        public int ObtenerIdPorNombre(
+    string nombre)
+        {
+            int id = 0;
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion  ())
+            {
+                string sql =
+                    @"SELECT IdTipoDocumento
+              FROM TipoDocumento
+              WHERE Sigla = @Sigla";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@Sigla",
+                    nombre);
+
+                cn.Open();
+
+                object resultado =
+                    cmd.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    id = Convert.ToInt32(resultado);
+                }
+            }
+
+            return id;
+        }
     }
 }

@@ -1,201 +1,167 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
     CodeBehind="Fichas.aspx.cs"
     Inherits="PlanMejoramiento.Vista.Fichas" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html>
-<head runat="server">
-    <title>Gestión de Fichas</title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="sidebar">
+    <h2>Gestión de Fichas</h2>
 
-<h2>Plan Mejoramiento</h2>
-
-<a href="Inicio.aspx">🏠 Inicio</a>
-
-<a href="Usuarios.aspx">👤 Usuarios</a>
-
-<a href="Aprendiz.aspx">👨‍🎓 Aprendices</a>
-
-<a href="AprendizFichas.aspx">📚 Aprendiz - Ficha</a>
-
-<a href="Fichas.aspx">📋 Fichas</a>
-
-<a href="Instructor.aspx">👨‍🏫 Instructores</a>
-
-<a href="InstructorFcihas.aspx">📝 Instructor - Ficha</a>
-
-<a href="Programas.aspx">🎓 Programas</a>
-
-<a href="PlanMejoramientos.aspx">📈 Planes</a>
-
-<a href="Evidencias.aspx">📂 Evidencias</a>
-
-<a href="CargaMasivaAprendiz.aspx">📤 Carga Masiva</a>
-
-<a href="Login.aspx">🚪 Salir</a>
-
-</div>
-
-        <h2>Gestión de Fichas</h2>
-
-        Código Ficha
+    Código Ficha
 
     <br />
 
-        <asp:TextBox
-            ID="txtCodigoFicha"
-            runat="server">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtCodigoFicha"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Fecha Inicio
+    Fecha Inicio
 
     <br />
 
-        <asp:TextBox
-            ID="txtFechaInicio"
-            runat="server"
-            TextMode="Date">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtFechaInicio"
+        runat="server"
+        TextMode="Date">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Fecha Finalización
+    Fecha Finalización
 
     <br />
 
-        <asp:TextBox
-            ID="txtFechaFinalizacion"
-            runat="server"
-            TextMode="Date">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtFechaFinalizacion"
+        runat="server"
+        TextMode="Date">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Descripción
+    Descripción
 
     <br />
 
-        <asp:TextBox
-            ID="txtDescripcion"
-            runat="server">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtDescripcion"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Estado
+    Estado
 
     <br />
 
-        <asp:TextBox
-            ID="txtEstado"
-            runat="server">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtEstado"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Programa
+    Programa
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlPrograma"
-            runat="server">
-        </asp:DropDownList>
+    <asp:DropDownList
+        ID="ddlPrograma"
+        runat="server">
+    </asp:DropDownList>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Jornada
+    Jornada
 
     <br />
 
-        <asp:DropDownList
-            ID="ddlJornada"
-            runat="server">
-        </asp:DropDownList>
+    <asp:DropDownList
+        ID="ddlJornada"
+        runat="server">
+    </asp:DropDownList>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:HiddenField
-            ID="hfIdFicha"
-            runat="server" />
+    <asp:HiddenField
+        ID="hfIdFicha"
+        runat="server" />
 
-        <asp:Button
-            ID="btnGuardar"
-            runat="server"
-            Text="Guardar"
-            OnClick="btnGuardar_Click" />
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar"
+        OnClick="btnGuardar_Click" />
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:Button
-            ID="btnActualizar"
-            runat="server"
-            Text="Actualizar"
-            OnClick="btnActualizar_Click" />
+    <asp:Button
+        ID="btnActualizar"
+        runat="server"
+        Text="Actualizar"
+        OnClick="btnActualizar_Click" />
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:GridView
-            ID="gvFichas"
-            runat="server"
-            AutoGenerateColumns="False"
-            DataKeyNames="IdFicha"
-            OnRowDeleting="gvFichas_RowDeleting"
-            OnSelectedIndexChanged="gvFichas_SelectedIndexChanged">
+    <asp:GridView
+        ID="gvFichas"
+        runat="server"
+        AutoGenerateColumns="False"
+        DataKeyNames="IdFicha"
+        OnRowDeleting="gvFichas_RowDeleting"
+        OnSelectedIndexChanged="gvFichas_SelectedIndexChanged">
 
-            <Columns>
+        <Columns>
 
-                <asp:BoundField
-                    DataField="CodigoFicha"
-                    HeaderText="Código" />
+            <asp:BoundField
+                DataField="CodigoFicha"
+                HeaderText="Código" />
 
-                <asp:BoundField
-                    DataField="Programa"
-                    HeaderText="Programa" />
+            <asp:BoundField
+                DataField="Programa"
+                HeaderText="Programa" />
 
-                <asp:BoundField
-                    DataField="Descripcion"
-                    HeaderText="Descripción" />
+            <asp:BoundField
+                DataField="Descripcion"
+                HeaderText="Descripción" />
 
-                <asp:BoundField
-                    DataField="Jornada"
-                    HeaderText="Jornada" />
+            <asp:BoundField
+                DataField="Jornada"
+                HeaderText="Jornada" />
 
-                <asp:BoundField
-                    DataField="FechaInicio"
-                    HeaderText="Inicio" />
+            <asp:BoundField
+                DataField="FechaInicio"
+                HeaderText="Inicio" />
 
-                <asp:BoundField
-                    DataField="FechaFinalizacion"
-                    HeaderText="Finalización" />
+            <asp:BoundField
+                DataField="FechaFinalizacion"
+                HeaderText="Finalización" />
 
-                <asp:BoundField
-                    DataField="Estado"
-                    HeaderText="Estado" />
+            <asp:BoundField
+                DataField="Estado"
+                HeaderText="Estado" />
 
-                <asp:CommandField
-                    ShowDeleteButton="True"
-                    ShowSelectButton="True" />
+            <asp:CommandField
+                ShowDeleteButton="True"
+                ShowSelectButton="True" />
 
-            </Columns>
+        </Columns>
 
-        </asp:GridView>
+    </asp:GridView>
 
-    </form>
-</body>
-</html>
+</asp:Content>

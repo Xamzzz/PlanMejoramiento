@@ -1,209 +1,126 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
     CodeBehind="Evidencias.aspx.cs"
     Inherits="PlanMejoramiento.Vista.Evidencias" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Evidencias</title>
+    <h2>Registro de Evidencias</h2>
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 30px;
-        }
+    <br />
 
-        .contenedor {
-            width: 700px;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-        }
+    <asp:Label
+        ID="lblPlan"
+        runat="server"
+        Text="Plan de Mejoramiento">
+    </asp:Label>
 
-        .titulo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    <br />
 
-        .fila {
-            margin-bottom: 15px;
-        }
+    <asp:DropDownList
+        ID="ddlPlan"
+        runat="server"
+        Width="400px">
+    </asp:DropDownList>
 
-        .etiqueta {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
+    <br />
+    <br />
 
-        .caja {
-            width: 100%;
-            padding: 8px;
-        }
+    <asp:Label
+        ID="lblNombreArchivo"
+        runat="server"
+        Text="Nombre Archivo">
+    </asp:Label>
 
-        .boton {
-            padding: 10px 20px;
-        }
-    </style>
+    <br />
 
-</head>
-<body>
+    <asp:TextBox
+        ID="txtNombreArchivo"
+        runat="server"
+        Width="400px">
+    </asp:TextBox>
 
-    <form id="form1" runat="server">
-        <div class="sidebar">
+    <br />
+    <br />
 
-<h2>Plan Mejoramiento</h2>
+    <asp:Label
+        ID="lblArchivo"
+        runat="server"
+        Text="Seleccionar Archivo">
+    </asp:Label>
 
-<a href="Inicio.aspx">🏠 Inicio</a>
+    <br />
 
-<a href="Usuarios.aspx">👤 Usuarios</a>
+    <asp:FileUpload
+        ID="fuArchivo"
+        runat="server" />
 
-<a href="Aprendiz.aspx">👨‍🎓 Aprendices</a>
+    <br />
+    <br />
 
-<a href="AprendizFichas.aspx">📚 Aprendiz - Ficha</a>
+    <asp:Label
+        ID="lblObservacion"
+        runat="server"
+        Text="Observación Instructor">
+    </asp:Label>
 
-<a href="Fichas.aspx">📋 Fichas</a>
+    <br />
 
-<a href="Instructor.aspx">👨‍🏫 Instructores</a>
+    <asp:TextBox
+        ID="txtObservacion"
+        runat="server"
+        TextMode="MultiLine"
+        Rows="5"
+        Width="500px">
+    </asp:TextBox>
 
-<a href="InstructorFcihas.aspx">📝 Instructor - Ficha</a>
+    <br />
+    <br />
 
-<a href="Programas.aspx">🎓 Programas</a>
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar Evidencia"
+        OnClick="btnGuardar_Click" />
 
-<a href="PlanMejoramientos.aspx">📈 Planes</a>
+    <br />
+    <br />
 
-<a href="Evidencias.aspx">📂 Evidencias</a>
+    <asp:GridView
+        ID="gvEvidencias"
+        runat="server"
+        AutoGenerateColumns="False"
+        DataKeyNames="IdEvidencia"
+        OnRowDeleting="gvEvidencias_RowDeleting">
 
-<a href="CargaMasivaAprendiz.aspx">📤 Carga Masiva</a>
+        <Columns>
 
-<a href="Login.aspx">🚪 Salir</a>
+            <asp:BoundField
+                DataField="IdEvidencia"
+                HeaderText="Id" />
 
-</div>
+            <asp:BoundField
+                DataField="NombreArchivo"
+                HeaderText="Archivo" />
 
-        <div class="contenedor">
+            <asp:BoundField
+                DataField="ObservacionInstructor"
+                HeaderText="Observación" />
 
-            <div class="titulo">
-                Registro de Evidencias
-            </div>
+            <asp:HyperLinkField
+                DataNavigateUrlFields="RutaArchivo"
+                HeaderText="Ver Evidencia"
+                Text="Abrir Archivo"
+                Target="_blank" />
 
-            <div class="fila">
+            <asp:CommandField
+                ShowDeleteButton="True" />
 
-                <asp:Label
-                    ID="lblPlan"
-                    runat="server"
-                    CssClass="etiqueta"
-                    Text="Plan de Mejoramiento">
-                </asp:Label>
+        </Columns>
 
-                <asp:DropDownList
-                    ID="ddlPlan"
-                    runat="server"
-                    CssClass="caja">
-                </asp:DropDownList>
+    </asp:GridView>
 
-            </div>
-
-            <div class="fila">
-
-                <asp:Label
-                    ID="lblNombreArchivo"
-                    runat="server"
-                    CssClass="etiqueta"
-                    Text="Nombre Archivo">
-                </asp:Label>
-
-                <asp:TextBox
-                    ID="txtNombreArchivo"
-                    runat="server"
-                    CssClass="caja">
-                </asp:TextBox>
-
-            </div>
-
-            <div class="fila">
-
-                <asp:Label
-                    ID="lblArchivo"
-                    runat="server"
-                    CssClass="etiqueta"
-                    Text="Seleccionar Archivo">
-                </asp:Label>
-
-                <asp:FileUpload
-                    ID="fuArchivo"
-                    runat="server" />
-
-            </div>
-
-            <div class="fila">
-
-                <asp:Label
-                    ID="lblObservacion"
-                    runat="server"
-                    CssClass="etiqueta"
-                    Text="Observación Instructor">
-                </asp:Label>
-
-                <asp:TextBox
-                    ID="txtObservacion"
-                    runat="server"
-                    TextMode="MultiLine"
-                    Rows="5"
-                    CssClass="caja">
-                </asp:TextBox>
-
-            </div>
-
-            <div class="fila">
-
-                <asp:Button
-                    ID="btnGuardar"
-                    runat="server"
-                    CssClass="boton"
-                    Text="Guardar Evidencia"
-                    OnClick="btnGuardar_Click" />
-
-            </div>
-
-        </div>
-
-        <br />
-
-        <asp:GridView
-            ID="gvEvidencias"
-            runat="server"
-            AutoGenerateColumns="False">
-
-            <Columns>
-
-                <asp:BoundField
-                    DataField="IdEvidencia"
-                    HeaderText="Id" />
-
-                <asp:BoundField
-                    DataField="NombreArchivo"
-                    HeaderText="Archivo" />
-
-                <asp:BoundField
-                    DataField="ObservacionInstructor"
-                    HeaderText="Observación" />
-
-                <asp:HyperLinkField
-                    DataNavigateUrlFields="RutaArchivo"
-                    HeaderText="Ver Evidencia"
-                    Text="Abrir Archivo"
-                    Target="_blank" />
-
-                <asp:ButtonField
-                    Text="Eliminar"
-                    CommandName="Eliminar" />
-
-            </Columns>
-
-        </asp:GridView>
-
-    </form>
-
-</body>
-</html>
+</asp:Content>

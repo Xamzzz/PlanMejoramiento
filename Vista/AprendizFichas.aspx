@@ -1,91 +1,65 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Title="Aprendiz - Ficha"
+    Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
     CodeBehind="AprendizFichas.aspx.cs"
     Inherits="PlanMejoramiento.Vista.AprendizFichas" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html>
-<head runat="server">
-    <title>Aprendiz Ficha</title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="sidebar">
+    <h2>Asignar Aprendiz a Ficha</h2>
 
-<h2>Plan Mejoramiento</h2>
+    <asp:Label
+        ID="Label1"
+        runat="server"
+        Text="Aprendiz">
+    </asp:Label>
 
-<a href="Inicio.aspx">🏠 Inicio</a>
+    <br />
 
-<a href="Usuarios.aspx">👤 Usuarios</a>
+    <asp:DropDownList
+        ID="ddlAprendiz"
+        runat="server"
+        Width="300px">
+    </asp:DropDownList>
 
-<a href="Aprendiz.aspx">👨‍🎓 Aprendices</a>
+    <br />
+    <br />
 
-<a href="AprendizFichas.aspx">📚 Aprendiz - Ficha</a>
+    <asp:Label
+        ID="Label2"
+        runat="server"
+        Text="Ficha">
+    </asp:Label>
 
-<a href="Fichas.aspx">📋 Fichas</a>
+    <br />
 
-<a href="Instructor.aspx">👨‍🏫 Instructores</a>
+    <asp:DropDownList
+        ID="ddlFicha"
+        runat="server"
+        Width="300px">
+    </asp:DropDownList>
 
-<a href="InstructorFcihas.aspx">📝 Instructor - Ficha</a>
+    <br />
+    <br />
 
-<a href="Programas.aspx">🎓 Programas</a>
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar"
+        OnClick="btnGuardar_Click" />
 
-<a href="PlanMejoramientos.aspx">📈 Planes</a>
+    <br />
+    <br />
 
-<a href="Evidencias.aspx">📂 Evidencias</a>
+    <hr />
 
-<a href="CargaMasivaAprendiz.aspx">📤 Carga Masiva</a>
+    <asp:GridView
+        ID="gvDatos"
+        runat="server"
+        AutoGenerateColumns="true">
+    </asp:GridView>
 
-<a href="Login.aspx">🚪 Salir</a>
-
-</div>
-
-        <h2>Asignar Aprendiz a Ficha</h2>
-
-        <asp:Label ID="Label1"
-            runat="server"
-            Text="Aprendiz">
-        </asp:Label>
-
-        <br />
-
-        <asp:DropDownList
-            ID="ddlAprendiz"
-            runat="server"
-            Width="300px">
-        </asp:DropDownList>
-
-        <br /><br />
-
-        <asp:Label ID="Label2"
-            runat="server"
-            Text="Ficha">
-        </asp:Label>
-
-        <br />
-
-        <asp:DropDownList
-            ID="ddlFicha"
-            runat="server"
-            Width="300px">
-        </asp:DropDownList>
-
-        <br /><br />
-
-        <asp:Button
-            ID="btnGuardar"
-            runat="server"
-            Text="Guardar"
-            OnClick="btnGuardar_Click" />
-
-        <hr />
-
-        <asp:GridView
-            ID="gvDatos"
-            runat="server"
-            AutoGenerateColumns="true">
-        </asp:GridView>
-
-    </form>
-</body>
-</html>
+</asp:Content>

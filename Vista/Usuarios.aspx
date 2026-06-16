@@ -1,216 +1,196 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"
+﻿<%@ Page Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
     CodeBehind="Usuarios.aspx.cs"
     Inherits="PlanMejoramiento.Vista.Usuarios" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html>
-<head runat="server">
-    <title>Usuarios</title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="sidebar">
+    <h2>Gestión de Usuarios</h2>
 
-<h2>Plan Mejoramiento</h2>
+    Usuario
 
-<a href="Inicio.aspx">🏠 Inicio</a>
+    <asp:TextBox
+        ID="txtUsuario"
+        runat="server">
+    </asp:TextBox>
 
-<a href="Usuarios.aspx">👤 Usuarios</a>
+    <br />
+    <br />
 
-<a href="Aprendiz.aspx">👨‍🎓 Aprendices</a>
+    Clave
 
-<a href="AprendizFichas.aspx">📚 Aprendiz - Ficha</a>
+    <asp:TextBox
+        ID="txtClave"
+        runat="server">
+    </asp:TextBox>
 
-<a href="Fichas.aspx">📋 Fichas</a>
+    <br />
+    <br />
 
-<a href="Instructor.aspx">👨‍🏫 Instructores</a>
+    Rol
 
-<a href="InstructorFcihas.aspx">📝 Instructor - Ficha</a>
+    <asp:DropDownList
+        ID="ddlRol"
+        runat="server">
+    </asp:DropDownList>
 
-<a href="Programas.aspx">🎓 Programas</a>
+    <br />
+    <br />
 
-<a href="PlanMejoramientos.aspx">📈 Planes</a>
+    <asp:Label
+        ID="LabelDocumento"
+        runat="server"
+        Text="Número Documento">
+    </asp:Label>
 
-<a href="Evidencias.aspx">📂 Evidencias</a>
+    <asp:TextBox
+        ID="txtNumeroDocumento"
+        runat="server">
+    </asp:TextBox>
 
-<a href="CargaMasivaAprendiz.aspx">📤 Carga Masiva</a>
+    <br />
+    <br />
 
-<a href="Login.aspx">🚪 Salir</a>
+    <asp:Label
+        ID="LabelNombres"
+        runat="server"
+        Text="Nombres">
+    </asp:Label>
 
-</div>
+    <asp:TextBox
+        ID="txtNombres"
+        runat="server">
+    </asp:TextBox>
 
-        <h2>Gestión de Usuarios</h2>
+    <br />
+    <br />
 
-        Usuario
+    <asp:Label
+        ID="LabelApellidos"
+        runat="server"
+        Text="Apellidos">
+    </asp:Label>
 
-        <asp:TextBox
-            ID="txtUsuario"
-            runat="server">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtApellidos"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Clave
+    <asp:Label
+        ID="LabelCorreo"
+        runat="server"
+        Text="Correo">
+    </asp:Label>
 
-        <asp:TextBox
-            ID="txtClave"
-            runat="server">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtCorreo"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Rol
+    <asp:Label
+        ID="LabelTelefono"
+        runat="server"
+        Text="Teléfono">
+    </asp:Label>
 
-        <asp:DropDownList
-            ID="ddlRol"
-            runat="server">
-        </asp:DropDownList>
+    <asp:TextBox
+        ID="txtTelefono"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:Label ID="LabelDocumento"
-            runat="server"
-            Text="Número Documento">
-        </asp:Label>
+    <asp:Label
+        ID="LabelEspecialidad"
+        runat="server"
+        Text="Especialidad">
+    </asp:Label>
 
-        <asp:TextBox ID="txtNumeroDocumento"
-            runat="server">
-        </asp:TextBox>
+    <asp:TextBox
+        ID="txtEspecialidad"
+        runat="server">
+    </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:Label ID="LabelNombres"
-            runat="server"
-            Text="Nombres">
-        </asp:Label>
+    <asp:HiddenField
+        ID="hfIdUsuario"
+        runat="server" />
 
-        <asp:TextBox ID="txtNombres"
-            runat="server">
-        </asp:TextBox>
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar"
+        OnClick="btnGuardar_Click" />
 
-        <br />
-        <br />
+    <asp:Button
+        ID="btnActualizar"
+        runat="server"
+        Text="Actualizar"
+        OnClick="btnActualizar_Click" />
 
-        <asp:Label ID="LabelApellidos"
-            runat="server"
-            Text="Apellidos">
-        </asp:Label>
+    <br />
+    <br />
 
-        <asp:TextBox ID="txtApellidos"
-            runat="server">
-        </asp:TextBox>
+    <asp:DropDownList
+        ID="ddlTipoDocumento"
+        runat="server">
+    </asp:DropDownList>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:Label ID="LabelCorreo"
-            runat="server"
-            Text="Correo">
-        </asp:Label>
+    <asp:DropDownList
+        ID="ddlEstadoAprendiz"
+        runat="server">
+    </asp:DropDownList>
 
-        <asp:TextBox ID="txtCorreo"
-            runat="server">
-        </asp:TextBox>
+    <br />
+    <br />
 
-        <br />
-        <br />
+    <asp:GridView
+        ID="gvUsuarios"
+        runat="server"
+        AutoGenerateColumns="False"
+        DataKeyNames="IdUsuario"
+        OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged"
+        OnRowDeleting="gvUsuarios_RowDeleting">
 
-        <asp:Label ID="LabelTelefono"
-            runat="server"
-            Text="Teléfono">
-        </asp:Label>
+        <Columns>
 
-        <asp:TextBox ID="txtTelefono"
-            runat="server">
-        </asp:TextBox>
+            <asp:BoundField
+                DataField="IdUsuario"
+                HeaderText="ID" />
 
-        <br />
-        <br />
+            <asp:BoundField
+                DataField="NombreUsuario"
+                HeaderText="Usuario" />
 
-        <asp:Label ID="LabelEspecialidad"
-            runat="server"
-            Text="Especialidad">
-        </asp:Label>
-        <asp:TextBox ID="txtEspecialidad"
-            runat="server">
-        </asp:TextBox>
+            <asp:BoundField
+                DataField="Clave"
+                HeaderText="Clave" />
 
-        <br />
-        <br />
+            <asp:BoundField
+                DataField="Rol"
+                HeaderText="Rol" />
 
-        <asp:HiddenField
-            ID="hfIdUsuario"
-            runat="server" />
+            <asp:CommandField
+                ShowSelectButton="True"
+                ShowDeleteButton="True" />
 
-        <asp:Button
-            ID="btnGuardar"
-            runat="server"
-            Text="Guardar"
-            OnClick="btnGuardar_Click" />
+        </Columns>
 
-        <asp:Button
-            ID="btnActualizar"
-            runat="server"
-            Text="Actualizar"
-            OnClick="btnActualizar_Click" />
+    </asp:GridView>
 
-        <br />
-        <br />
-
-        <asp:DropDownList
-            ID="ddlTipoDocumento"
-            runat="server">
-        </asp:DropDownList>
-
-        <br />
-        <br />
-
-        <asp:DropDownList
-            ID="ddlEstadoAprendiz"
-            runat="server">
-        </asp:DropDownList>
-
-        <br />
-        <br />
-        <asp:GridView
-            ID="gvUsuarios"
-            runat="server"
-            AutoGenerateColumns="False"
-            DataKeyNames="IdUsuario"
-            OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged"
-            OnRowDeleting="gvUsuarios_RowDeleting">
-
-            <Columns>
-
-                <asp:BoundField
-                    DataField="IdUsuario"
-                    HeaderText="ID" />
-
-                <asp:BoundField
-                    DataField="NombreUsuario"
-                    HeaderText="Usuario" />
-
-                <asp:BoundField
-                    DataField="Clave"
-                    HeaderText="Clave" />
-
-                <asp:BoundField
-                    DataField="Rol"
-                    HeaderText="Rol" />
-
-                <asp:CommandField
-                    ShowSelectButton="True"
-                    ShowDeleteButton="True" />
-
-            </Columns>
-
-        </asp:GridView>
-
-    </form>
-</body>
-</html>
+</asp:Content>

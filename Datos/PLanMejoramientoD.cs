@@ -116,6 +116,131 @@ namespace PlanMejoramiento.Datos
             return lista;
         }
 
+        public List<Modelo.ConsultaGestionAcademica>
+    ConsultarGestionAcademica()
+        {
+            List<Modelo.ConsultaGestionAcademica> lista =
+                new List<Modelo.ConsultaGestionAcademica>();
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+
+SELECT
+
+    P.IdPlan,
+
+    F.CodigoFicha,
+
+    PR.Nombre AS Programa,
+
+    J.NombreJornada,
+
+    A.NumeroDocumento,
+
+    A.Nombres + ' ' +
+    A.Apellidos AS Aprendiz,
+
+    EA.NombreEstado AS EstadoAprendiz,
+
+    TP.NombreTipo,
+
+    EP.NombreEstado AS EstadoPlan,
+
+    P.FechaAsignacion,
+
+    P.FechaLimite,
+
+    P.IdInstructor
+
+FROM PlanMejoramiento P
+
+INNER JOIN TipoPlan TP
+ON P.IdTipoPlan = TP.IdTipoPlan
+
+INNER JOIN EstadoPlan EP
+ON P.IdEstadoPlan = EP.IdEstadoPlan
+
+INNER JOIN AprendizFicha AF
+ON P.IdAprendizFicha = AF.Id
+
+INNER JOIN Aprendiz A
+ON AF.IdAprendiz = A.IdAprendiz
+
+INNER JOIN EstadoAprendiz EA
+ON A.IdEstadoAprendiz =
+   EA.IdEstadoAprendiz
+
+INNER JOIN Ficha F
+ON AF.IdFicha = F.IdFicha
+
+INNER JOIN Programa PR
+ON F.IdPrograma = PR.IdPrograma
+
+INNER JOIN Jornada J
+ON F.IdJornada = J.IdJornada";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                SqlDataReader dr =
+                    cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    ConsultaGestionAcademica c =
+                        new ConsultaGestionAcademica();
+
+                    c.IdPlan =
+                        Convert.ToInt32(
+                            dr["IdPlan"]);
+
+                    c.CodigoFicha =
+                        dr["CodigoFicha"].ToString();
+
+                    c.Programa =
+                        dr["Programa"].ToString();
+
+                    c.Jornada =
+                        dr["NombreJornada"].ToString();
+
+                    c.Documento =
+                        dr["NumeroDocumento"].ToString();
+
+                    c.Aprendiz =
+                        dr["Aprendiz"].ToString();
+
+                    c.EstadoAprendiz =
+                        dr["EstadoAprendiz"].ToString();
+
+                    c.TipoPlan =
+                        dr["NombreTipo"].ToString();
+
+                    c.EstadoPlan =
+                        dr["EstadoPlan"].ToString();
+
+                    c.FechaAsignacion =
+                        Convert.ToDateTime(
+                            dr["FechaAsignacion"]);
+
+                    c.FechaLimite =
+                        Convert.ToDateTime(
+                            dr["FechaLimite"]);
+
+                    c.IdInstructor =
+                        Convert.ToInt32(
+                            dr["IdInstructor"]);
+
+                    lista.Add(c);
+                }
+            }
+
+            return lista;
+        }
+
         public int InsertarRetornandoId(
             Modelo.PlanMejoramiento p)
         {
@@ -298,6 +423,118 @@ namespace PlanMejoramiento.Datos
 
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public int ObtenerInstructorDelPlan(
+    int idPlan)
+        {
+            int idInstructor = 0;
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+        SELECT IdInstructor
+        FROM PlanMejoramiento
+        WHERE IdPlan = @IdPlan";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdPlan",
+                    idPlan);
+
+                object resultado =
+                    cmd.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idInstructor =
+                        Convert.ToInt32(
+                            resultado);
+                }
+            }
+
+            return idInstructor;
+        }
+
+        public void ActualizarEstado(
+    int idPlan,
+    int idEstado)
+        {
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+        UPDATE PlanMejoramiento
+        SET IdEstadoPlan =
+            @IdEstadoPlan
+        WHERE IdPlan =
+            @IdPlan";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdEstadoPlan",
+                    idEstado);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdPlan",
+                    idPlan);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public Modelo.PlanMejoramiento
+    ObtenerPorId(int idPlan)
+        {
+            Modelo.PlanMejoramiento p =
+                null;
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+        SELECT *
+        FROM PlanMejoramiento
+        WHERE IdPlan = @IdPlan";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdPlan",
+                    idPlan);
+
+                SqlDataReader dr =
+                    cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    p =
+                        new Modelo.PlanMejoramiento();
+
+                    p.IdPlan =
+                        (int)dr["IdPlan"];
+
+                    p.IdAprendizFicha =
+                        (int)dr["IdAprendizFicha"];
+
+                    p.IdInstructor =
+                        (int)dr["IdInstructor"];
+                }
+            }
+
+            return p;
         }
     }
 }

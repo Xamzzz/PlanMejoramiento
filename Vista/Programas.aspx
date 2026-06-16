@@ -1,126 +1,124 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Programas.aspx.cs" Inherits="PlanMejoramiento.Vista.Programas" %>
+﻿<%@ Page Language="C#"
+    MasterPageFile="~/Site1.Master"
+    AutoEventWireup="true"
+    CodeBehind="Programas.aspx.cs"
+    Inherits="PlanMejoramiento.Vista.Programas" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1"
+    ContentPlaceHolderID="MainContent"
+    runat="server">
 
-<html>
-<head runat="server">
-    <title>Programas</title>
-</head>
-<body>
-    <form runat="server">
-        <div class="sidebar">
+    <h2>Programas</h2>
 
-<h2>Plan Mejoramiento</h2>
+    Código
 
-<a href="Inicio.aspx">🏠 Inicio</a>
-
-<a href="Login.aspx">🚪 Salir</a>
-
-</div>
-
-        <h2>Programas</h2>
-
-        Código
-    <asp:TextBox ID="txtCodigo"
+    <asp:TextBox
+        ID="txtCodigo"
         runat="server">
     </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Nombre
-    <asp:TextBox ID="txtNombre"
+    Nombre
+
+    <asp:TextBox
+        ID="txtNombre"
         runat="server">
     </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Versión
-    <asp:TextBox ID="txtVersion"
+    Versión
+
+    <asp:TextBox
+        ID="txtVersion"
         runat="server">
     </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Nivel
-    <asp:TextBox ID="txtNivel"
+    Nivel
+
+    <asp:TextBox
+        ID="txtNivel"
         runat="server">
     </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        Duración
-    <asp:TextBox ID="txtDuracion"
+    Duración
+
+    <asp:TextBox
+        ID="txtDuracion"
         runat="server">
     </asp:TextBox>
 
-        <br />
-        <br />
+    <br />
+    <br />
 
-        <asp:HiddenField
-            ID="hfIdPrograma"
-            runat="server" />
+    <asp:HiddenField
+        ID="hfIdPrograma"
+        runat="server" />
 
-        <asp:Button
-            ID="btnGuardar"
-            runat="server"
-            Text="Guardar"
-            OnClick="btnGuardar_Click" />
+    <asp:Button
+        ID="btnGuardar"
+        runat="server"
+        Text="Guardar"
+        OnClick="btnGuardar_Click" />
 
-        <br />
-        <br />
+    <asp:Button
+        ID="btnActualizar"
+        runat="server"
+        Text="Actualizar"
+        OnClick="btnActualizar_Click" />
 
-        <asp:Button
-    ID="btnActualizar"
-    runat="server"
-    Text="Actualizar"
-    OnClick="btnActualizar_Click" />
+    <br />
+    <br />
 
-        <asp:GridView
-            ID="gvProgramas"
-            runat="server"
-            AutoGenerateColumns="False"
-            OnRowDeleting="gvProgramas_RowDeleting"
-            DataKeyNames="IdPrograma"
-            OnSelectedIndexChanged="gvProgramas_SelectedIndexChanged">
+    <asp:GridView
+        ID="gvProgramas"
+        runat="server"
+        AutoGenerateColumns="False"
+        DataKeyNames="IdPrograma"
+        OnRowDeleting="gvProgramas_RowDeleting"
+        OnSelectedIndexChanged="gvProgramas_SelectedIndexChanged">
 
-            <Columns>
+        <Columns>
 
-                <asp:BoundField
-                    DataField="IdPrograma"
-                    HeaderText="ID" />
+            <asp:BoundField
+                DataField="IdPrograma"
+                HeaderText="ID" />
 
-                <asp:BoundField
-                    DataField="CodigoPrograma"
-                    HeaderText="Código" />
+            <asp:BoundField
+                DataField="CodigoPrograma"
+                HeaderText="Código" />
 
-                <asp:BoundField
-                    DataField="Nombre"
-                    HeaderText="Nombre" />
+            <asp:BoundField
+                DataField="Nombre"
+                HeaderText="Nombre" />
 
-                <asp:BoundField
-                    DataField="Version"
-                    HeaderText="Versión" />
+            <asp:BoundField
+                DataField="Version"
+                HeaderText="Versión" />
 
-                <asp:BoundField
-                    DataField="Nivel"
-                    HeaderText="Nivel" />
+            <asp:BoundField
+                DataField="Nivel"
+                HeaderText="Nivel" />
 
-                <asp:BoundField
-                    DataField="Duracion"
-                    HeaderText="Duración" />
+            <asp:BoundField
+                DataField="Duracion"
+                HeaderText="Duración" />
 
-                <asp:CommandField
-                    ShowDeleteButton="True"
-                    ShowSelectButton="True" />
+            <asp:CommandField
+                ShowDeleteButton="True"
+                ShowSelectButton="True" />
 
-            </Columns>
+        </Columns>
 
-        </asp:GridView>
+    </asp:GridView>
 
-    </form>
-</body>
-</html>
+</asp:Content>

@@ -1,8 +1,10 @@
 ﻿using ExcelDataReader;
 using PlanMejoramiento.Datos;
+using PlanMejoramiento.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,148 +15,141 @@ namespace PlanMejoramiento.Vista
 {
     public partial class CargaMasivaAprendiz : System.Web.UI.Page
     {
+      
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void btnImportar_Click(
-            object sender,
-            EventArgs e)
+        protected void btnImportar_Click(object sender, EventArgs e)
+        {
+            ImportarExcel();
+        }
+
+        private void ImportarExcel()
         {
             try
             {
                 if (!fuExcel.HasFile)
                 {
-                    lblMensaje.Text =
-                        "Seleccione un archivo Excel.";
-
+                    lblMensaje.Text = "Seleccione un archivo Excel.";
                     return;
                 }
 
-                string carpetaTemp =
-                    Server.MapPath("~/Temp/");
+                string path = Server.MapPath("~/Temp/");
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
-                if (!Directory.Exists(carpetaTemp))
+                string filePath = Path.Combine(path, fuExcel.FileName);
+                fuExcel.SaveAs(filePath);
+
+                DataTable tabla;
+
+                using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    Directory.CreateDirectory(
-                        carpetaTemp);
+                    tabla = reader.AsDataSet().Tables[0];
                 }
 
-                string rutaArchivo =
-                    Path.Combine(
-                        carpetaTemp,
-                        fuExcel.FileName);
+                List<Modelo.Aprendiz> lista = new List<Modelo.Aprendiz>();
+                List<string> errores = new List<string>();
 
-                fuExcel.SaveAs(rutaArchivo);
+                AprendizD aprendizD = new AprendizD();
+                TipoDocumentoD tipoD = new TipoDocumentoD();
+                EstadoAprendizD estadoD = new EstadoAprendizD();
 
-                
-
-                using (var stream =
-                    File.Open(
-                        rutaArchivo,
-                        FileMode.Open,
-                        FileAccess.Read))
+                for (int i = 1; i < tabla.Rows.Count; i++)
                 {
-                    using (var reader =
-                        ExcelReaderFactory.CreateReader(stream))
+                    string documento = tabla.Rows[i][1].ToString().Trim();
+
+                    if (string.IsNullOrWhiteSpace(documento))
                     {
-                        DataSet ds =
-                            reader.AsDataSet();
-
-                        DataTable tabla =
-                            ds.Tables[0];
-
-                        AprendizD aprendizD =
-                            new AprendizD();
-
-                        FichaD fichaD =
-                            new FichaD();
-
-                        AprendizFichaD relacionD =
-                            new AprendizFichaD();
-
-                        int registros =
-                            0;
-
-                        for (int i = 1;
-                            i < tabla.Rows.Count;
-                            i++)
-                        {
-                            Modelo.Aprendiz a =
-                                new Modelo.Aprendiz();
-
-                            a.IdTipoDocumento =
-                                Convert.ToInt32(
-                                    tabla.Rows[i][0]);
-
-                            a.NumeroDocumento =
-                                tabla.Rows[i][1].ToString();
-
-                            a.Nombres =
-                                tabla.Rows[i][2].ToString();
-
-                            a.Apellidos =
-                                tabla.Rows[i][3].ToString();
-
-                            a.Correo =
-                                tabla.Rows[i][4].ToString();
-
-                            a.Telefono =
-                                tabla.Rows[i][5].ToString();
-
-                            a.IdEstadoAprendiz =
-                                Convert.ToInt32(
-                                    tabla.Rows[i][6]);
-
-                            string usuarioExcel =
-                                 tabla.Rows[i][7].ToString();
-
-                            if (string.IsNullOrWhiteSpace(usuarioExcel))
-                            {
-                                a.IdUsuario = 0;
-                            }
-                            else
-                            {
-                                a.IdUsuario =
-                                    Convert.ToInt32(usuarioExcel);
-                            }
-
-                            string codigoFicha =
-                                tabla.Rows[i][8].ToString();
-
-                            int idAprendiz =
-                                aprendizD
-                                .InsertarRetornandoId(a);
-
-                            int idFicha =
-                                fichaD
-                                .ObtenerIdPorCodigo(
-                                    codigoFicha);
-
-                            if (idFicha > 0)
-                            {
-                                relacionD
-                                .InsertarMasivo(
-                                    idAprendiz,
-                                    idFicha);
-
-                                registros++;
-                            }
-                        }
-
-                        lblMensaje.Text =
-                            "Importación exitosa. Registros cargados: "
-                            + registros;
+                        errores.Add($"Fila {i}: Documento vacío");
+                        continue;
                     }
+
+                    if (aprendizD.ExisteDocumento(documento))
+                    {
+                        errores.Add($"Fila {i}: Ya existe ({documento})");
+                        continue;
+                    }
+
+                    lista.Add(new Modelo.Aprendiz
+                    {
+                        IdTipoDocumento = tipoD.ObtenerIdPorNombre(tabla.Rows[i][0].ToString()),
+                        NumeroDocumento = documento,
+                        Nombres = tabla.Rows[i][2].ToString(),
+                        Apellidos = tabla.Rows[i][3].ToString(),
+                        Correo = tabla.Rows[i][4].ToString(),
+                        Telefono = tabla.Rows[i][5].ToString(),
+                        IdEstadoAprendiz = estadoD.ObtenerIdEnFormacion(),
+                    });
                 }
+
+                if (errores.Count > 0)
+                {
+                    lblMensaje.Text =
+                        "No se puede importar. Corrige el archivo primero.<br/>" +
+                        string.Join("<br/>", errores);
+                    return;
+                }
+
+                GuardarEnBD(lista);
+
+                lblMensaje.Text = "Importación exitosa ✔";
             }
             catch (Exception ex)
             {
-                lblMensaje.Text =
-                    "Error: " +
-                    ex.Message;
+                lblMensaje.Text = "Error: " + ex.Message;
+            }
+        }
+        private void GuardarEnBD(List<Modelo.Aprendiz> lista)
+        {
+            using (SqlConnection cn = ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+                SqlTransaction tx = cn.BeginTransaction();
+
+                try
+                {
+                    AprendizD aprendizD = new AprendizD();
+                    UsuarioD usuarioD = new UsuarioD();
+                    FichaD fichaD = new FichaD();
+                    AprendizFichaD relacionD = new AprendizFichaD();
+
+                    foreach (var a in lista)
+                    {
+                        Usuario u = new Usuario
+                        {
+                            NombreUsuario = a.NumeroDocumento,
+                            Clave = a.NumeroDocumento,
+                            IdRol = 3,
+                            Estado = true
+                        };
+
+                        //    int idUsuario = usuarioD.InsertarRetornandoId();
+                        //    a.IdUsuario = idUsuario;
+
+                        //    int idAprendiz = aprendizD.InsertarRetornandoId(a, cn, tx);
+
+                        //    int idFicha = fichaD.ObtenerIdPorCodigo(a.CodigoFicha);
+
+                        //    if (idFicha <= 0)
+                        //        throw new Exception("Ficha no existe: " + a.CodigoFicha);
+
+                        //    relacionD.InsertarMasivo(idAprendiz, idFicha, cn, tx);
+                        //}
+
+                        //tx.Commit();
+                    }
+                }
+                catch
+                {
+                    tx.Rollback();
+                    throw;
+                }
             }
         }
     }
 }
+
