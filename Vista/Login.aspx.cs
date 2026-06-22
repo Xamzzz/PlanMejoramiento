@@ -34,7 +34,7 @@ namespace PlanMejoramiento.Vista
                 Session["IdUsuario"] =
                     usuario.IdUsuario;
 
-                Session["Rol"] =
+                Session["IdRol"] =
                     usuario.IdRol;
 
                 Session["Usuario"] =

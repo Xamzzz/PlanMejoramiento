@@ -129,59 +129,59 @@ namespace PlanMejoramiento.Datos
 
                 string sql = @"
 
-SELECT
+                SELECT
 
-    P.IdPlan,
+                    P.IdPlan,
 
-    F.CodigoFicha,
+                    F.CodigoFicha,
 
-    PR.Nombre AS Programa,
+                    PR.Nombre AS Programa,
 
-    J.NombreJornada,
+                    J.NombreJornada,
 
-    A.NumeroDocumento,
+                    A.NumeroDocumento,
 
-    A.Nombres + ' ' +
-    A.Apellidos AS Aprendiz,
+                    A.Nombres + ' ' +
+                    A.Apellidos AS Aprendiz,
 
-    EA.NombreEstado AS EstadoAprendiz,
+                    EA.NombreEstado AS EstadoAprendiz,
 
-    TP.NombreTipo,
+                    TP.NombreTipo,
 
-    EP.NombreEstado AS EstadoPlan,
+                    EP.NombreEstado AS EstadoPlan,
 
-    P.FechaAsignacion,
+                    P.FechaAsignacion,
 
-    P.FechaLimite,
+                    P.FechaLimite,
 
-    P.IdInstructor
+                    P.IdInstructor
 
-FROM PlanMejoramiento P
+                FROM PlanMejoramiento P
 
-INNER JOIN TipoPlan TP
-ON P.IdTipoPlan = TP.IdTipoPlan
+                INNER JOIN TipoPlan TP
+                ON P.IdTipoPlan = TP.IdTipoPlan
 
-INNER JOIN EstadoPlan EP
-ON P.IdEstadoPlan = EP.IdEstadoPlan
+                INNER JOIN EstadoPlan EP
+                ON P.IdEstadoPlan = EP.IdEstadoPlan
 
-INNER JOIN AprendizFicha AF
-ON P.IdAprendizFicha = AF.Id
+                INNER JOIN AprendizFicha AF
+                ON P.IdAprendizFicha = AF.Id
 
-INNER JOIN Aprendiz A
-ON AF.IdAprendiz = A.IdAprendiz
+                INNER JOIN Aprendiz A
+                ON AF.IdAprendiz = A.IdAprendiz
 
-INNER JOIN EstadoAprendiz EA
-ON A.IdEstadoAprendiz =
-   EA.IdEstadoAprendiz
+                INNER JOIN EstadoAprendiz EA
+                ON A.IdEstadoAprendiz =
+                   EA.IdEstadoAprendiz
 
-INNER JOIN Ficha F
-ON AF.IdFicha = F.IdFicha
+                INNER JOIN Ficha F
+                ON AF.IdFicha = F.IdFicha
 
-INNER JOIN Programa PR
-ON F.IdPrograma = PR.IdPrograma
+                INNER JOIN Programa PR
+                ON F.IdPrograma = PR.IdPrograma
 
-INNER JOIN Jornada J
-ON F.IdJornada = J.IdJornada";
+                INNER JOIN Jornada J
+                ON F.IdJornada = J.IdJornada";
 
                 SqlCommand cmd =
                     new SqlCommand(sql, cn);
@@ -535,6 +535,144 @@ ON F.IdJornada = J.IdJornada";
             }
 
             return p;
+        }
+
+        public List<Modelo.PlanMejoramiento>
+                    ListarPorAprendiz(
+                    int idAprendiz)
+        {
+            List<Modelo.PlanMejoramiento>
+                lista =
+                new List<Modelo.PlanMejoramiento>();
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+
+        SELECT P.*
+
+        FROM PlanMejoramiento P
+
+        INNER JOIN AprendizFicha AF
+            ON P.IdAprendizFicha =
+               AF.Id
+
+        WHERE AF.IdAprendiz =
+              @IdAprendiz";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdAprendiz",
+                    idAprendiz);
+
+                SqlDataReader dr =
+                    cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Modelo.PlanMejoramiento p =
+                        new Modelo.PlanMejoramiento();
+
+                    p.IdPlan =
+                        (int)dr["IdPlan"];
+
+                    lista.Add(p);
+                }
+            }
+
+            return lista;
+        }
+
+        public List<Modelo.PlanMejoramiento>
+    ListarPorInstructor(
+    int idInstructor)
+        {
+            List<Modelo.PlanMejoramiento>
+                lista =
+                new List<Modelo.PlanMejoramiento>();
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+
+        SELECT *
+
+        FROM PlanMejoramiento
+
+        WHERE IdInstructor =
+              @IdInstructor";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdInstructor",
+                    idInstructor);
+
+                SqlDataReader dr =
+                    cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Modelo.PlanMejoramiento p =
+                        new Modelo.PlanMejoramiento();
+
+                    p.IdPlan =
+                        (int)dr["IdPlan"];
+
+                    lista.Add(p);
+                }
+            }
+
+            return lista;
+        }
+
+        public bool ValidarInstructorPlan(
+    int idPlan,
+    int idInstructor)
+        {
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+
+        SELECT COUNT(*)
+
+        FROM PlanMejoramiento
+
+        WHERE IdPlan =
+              @IdPlan
+
+        AND IdInstructor =
+            @IdInstructor";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdPlan",
+                    idPlan);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdInstructor",
+                    idInstructor);
+
+                int cantidad =
+                    Convert.ToInt32(
+                        cmd.ExecuteScalar());
+
+                return cantidad > 0;
+            }
         }
     }
 }

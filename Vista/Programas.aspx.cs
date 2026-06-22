@@ -14,7 +14,7 @@ namespace PlanMejoramiento.Vista
         ProgramaL logica = new ProgramaL();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Rol"] == null)
+            if (Session["IdRol"] == null)
             {
                 Response.Redirect("Login.aspx");
                 return;

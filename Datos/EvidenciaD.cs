@@ -140,5 +140,153 @@ namespace PlanMejoramiento.Datos
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public List<Evidencia>
+    ListarPorAprendiz(
+    int idAprendiz)
+        {
+            List<Evidencia> lista =
+                new List<Evidencia>();
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+
+        SELECT
+
+            E.*,
+            P.Actividades
+
+        FROM Evidencia E
+
+        INNER JOIN PlanMejoramiento P
+            ON E.IdPlan =
+               P.IdPlan
+
+        INNER JOIN AprendizFicha AF
+            ON P.IdAprendizFicha =
+               AF.Id
+
+        WHERE AF.IdAprendiz =
+              @IdAprendiz";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdAprendiz",
+                    idAprendiz);
+
+                SqlDataReader dr =
+                    cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Evidencia e =
+                        new Evidencia();
+
+                    e.IdEvidencia =
+                        (int)dr["IdEvidencia"];
+
+                    e.NombreArchivo =
+                        dr["NombreArchivo"]
+                        .ToString();
+
+                    e.RutaArchivo =
+                        dr["RutaArchivo"]
+                        .ToString();
+
+                    e.ObservacionInstructor =
+                        dr["ObservacionInstructor"]
+                        .ToString();
+
+                    e.IdPlan =
+                        (int)dr["IdPlan"];
+
+                    e.Actividades =
+                        dr["Actividades"]
+                        .ToString();
+
+                    lista.Add(e);
+                }
+            }
+
+            return lista;
+        }
+
+        public List<Evidencia>
+    ListarPorInstructor(
+    int idInstructor)
+        {
+            List<Evidencia> lista =
+                new List<Evidencia>();
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+
+        SELECT
+
+            E.*,
+            P.Actividades
+
+        FROM Evidencia E
+
+        INNER JOIN PlanMejoramiento P
+            ON E.IdPlan =
+               P.IdPlan
+
+        WHERE P.IdInstructor =
+              @IdInstructor";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdInstructor",
+                    idInstructor);
+
+                SqlDataReader dr =
+                    cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Evidencia e =
+                        new Evidencia();
+
+                    e.IdEvidencia =
+                        (int)dr["IdEvidencia"];
+
+                    e.NombreArchivo =
+                        dr["NombreArchivo"]
+                        .ToString();
+
+                    e.RutaArchivo =
+                        dr["RutaArchivo"]
+                        .ToString();
+
+                    e.ObservacionInstructor =
+                        dr["ObservacionInstructor"]
+                        .ToString();
+
+                    e.IdPlan =
+                        (int)dr["IdPlan"];
+
+                    e.Actividades =
+                        dr["Actividades"]
+                        .ToString();
+
+                    lista.Add(e);
+                }
+            }
+
+            return lista;
+        }
     }
 }

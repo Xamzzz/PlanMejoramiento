@@ -19,6 +19,21 @@ namespace PlanMejoramiento.Vista
             object sender,
             EventArgs e)
         {
+            if (Session["IdRol"] == null)
+            {
+                Response.Redirect(
+                    "Login.aspx");
+            }
+
+            int rol =
+                Convert.ToInt32(
+                    Session["IdRol"]);
+
+            if (rol != 1 && rol != 2)
+            {
+                Response.Redirect(
+                    "Inicio.aspx");
+            }
             if (!IsPostBack)
             {
                 CargarPlanes();
@@ -28,11 +43,35 @@ namespace PlanMejoramiento.Vista
 
         private void CargarPlanes()
         {
+            int rol =
+                Convert.ToInt32(
+                    Session["IdRol"]);
+
+            int idUsuario =
+                Convert.ToInt32(
+                    Session["IdUsuario"]);
+
             PlanMejoramientoL l =
                 new PlanMejoramientoL();
 
-            ddlPlan.DataSource =
-                l.Listar();
+            if (rol == 1)
+            {
+                ddlPlan.DataSource =
+                    l.Listar();
+            }
+            else
+            {
+                InstructorL instructorL =
+                    new InstructorL();
+
+                int idInstructor =
+                    instructorL.ObtenerIdPorUsuario(
+                        idUsuario);
+
+                ddlPlan.DataSource =
+                    l.ListarPorInstructor(
+                        idInstructor);
+            }
 
             ddlPlan.DataTextField =
                 "Actividades";
@@ -76,6 +115,35 @@ namespace PlanMejoramiento.Vista
 
             a.FechaEvaluacion =
                 DateTime.Now;
+
+            int rol =
+    Convert.ToInt32(
+        Session["IdRol"]);
+
+            if (rol == 2)
+            {
+                InstructorL instructorL =
+                    new InstructorL();
+
+                int idInstructor =
+                    instructorL.ObtenerIdPorUsuario(
+                        Convert.ToInt32(
+                            Session["IdUsuario"]));
+
+                bool esValido =
+                    new PlanMejoramientoL()
+                    .ValidarInstructorPlan(
+                        a.IdPlan,
+                        idInstructor);
+
+                if (!esValido)
+                {
+                    lblMensaje.Text =
+                        "No tiene permisos para evaluar este plan.";
+
+                    return;
+                }
+            }
 
             logica.Insertar(a);
 

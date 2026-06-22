@@ -30,6 +30,12 @@ namespace PlanMejoramiento.Vista
              new InstructorL();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Convert.ToInt32(
+                Session["IdRol"]) != 1)
+            {
+                Response.Redirect(
+                    "Inicio.aspx");
+            }
             if (!IsPostBack)
             {
                 CargarRoles();

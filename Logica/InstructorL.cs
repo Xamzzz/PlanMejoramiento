@@ -31,5 +31,12 @@ namespace PlanMejoramiento.Logica
         {
             datos.Eliminar(id);
         }
+
+        public int ObtenerIdPorUsuario(
+    int idUsuario)
+        {
+            return datos.ObtenerIdPorUsuario(
+                idUsuario);
+        }
     }
 }

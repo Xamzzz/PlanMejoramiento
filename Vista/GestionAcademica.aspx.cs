@@ -18,6 +18,21 @@ namespace PlanMejoramiento.Vista
      object sender,
      EventArgs e)
         {
+            if (Session["IdRol"] == null)
+            {
+                Response.Redirect(
+                    "Login.aspx");
+            }
+
+            int rol =
+                Convert.ToInt32(
+                    Session["IdRol"]);
+
+            if (rol != 1 && rol != 4)
+            {
+                Response.Redirect(
+                    "Inicio.aspx");
+            }
             if (!IsPostBack)
             {
                 CargarConsultaPlanes();
@@ -103,6 +118,22 @@ namespace PlanMejoramiento.Vista
                     gestionL.ObtenerIdPorUsuario(
                         Convert.ToInt32(
                             Session["IdUsuario"]));
+
+                PlanMejoramientoL planL =
+                     new PlanMejoramientoL();
+
+                int instructorCreador =
+                    planL.ObtenerInstructorDelPlan(
+                        a.IdPlan);
+
+                if (instructorCreador ==
+                    a.IdInstructorSupervisor)
+                {
+                    lblMensaje.Text =
+                        "El instructor supervisor debe ser diferente al instructor creador del plan.";
+
+                    return;
+                }
 
                 logica.Insertar(a);
 

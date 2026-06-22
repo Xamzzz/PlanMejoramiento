@@ -61,5 +61,29 @@ namespace PlanMejoramiento.Logica
             return datos.ObtenerPorId(
                 idPlan);
         }
+        public List<Modelo.PlanMejoramiento>
+    ListarPorAprendiz(
+    int idAprendiz)
+        {
+            return datos.ListarPorAprendiz(
+                idAprendiz);
+        }
+
+        public List<Modelo.PlanMejoramiento>
+            ListarPorInstructor(
+            int idInstructor)
+        {
+            return datos.ListarPorInstructor(
+                idInstructor);
+        }
+
+        public bool ValidarInstructorPlan(
+    int idPlan,
+    int idInstructor)
+        {
+            return datos.ValidarInstructorPlan(
+                idPlan,
+                idInstructor);
+        }
     }
 }

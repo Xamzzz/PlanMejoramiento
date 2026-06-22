@@ -26,5 +26,21 @@ namespace PlanMejoramiento.Logica
         {
             datos.Eliminar(id);
         }
+
+        public List<Evidencia>
+    ListarPorAprendiz(
+    int idAprendiz)
+        {
+            return datos.ListarPorAprendiz(
+                idAprendiz);
+        }
+
+        public List<Evidencia>
+            ListarPorInstructor(
+            int idInstructor)
+        {
+            return datos.ListarPorInstructor(
+                idInstructor);
+        }
     }
 }

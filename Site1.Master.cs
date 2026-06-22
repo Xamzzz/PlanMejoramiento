@@ -13,7 +13,7 @@ namespace PlanMejoramiento
      object sender,
      EventArgs e)
         {
-            if (Session["Rol"] == null)
+            if (Session["IdRol"] == null)
             {
                 Response.Redirect(
                     "~/Vista/Login.aspx");
@@ -26,7 +26,7 @@ namespace PlanMejoramiento
 
             int rol =
                 Convert.ToInt32(
-                    Session["Rol"]);
+                    Session["IdRol"]);
 
             // ADMINISTRADOR
             if (rol == 1)
@@ -86,7 +86,7 @@ namespace PlanMejoramiento
                 lnkInstructores.Visible = false;
                 lnkInstructorFicha.Visible = false;
                 lnkProgramas.Visible = false;
-                lnkPlanes.Visible = false;
+                lnkPlanes.Visible = true;
                 lnkEvidencias.Visible = true;
                 lnkCargaMasiva.Visible = false;
                 lnkEvaluacion.Visible = false;

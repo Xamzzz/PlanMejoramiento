@@ -17,6 +17,23 @@ namespace PlanMejoramiento.Vista
             object sender,
             EventArgs e)
         {
+            int rol =
+    Convert.ToInt32(
+        Session["IdRol"]);
+            if (rol == 3)
+            {
+                btnGuardar.Visible = false;
+
+                ddlTipoPlan.Visible = false;
+                ddlEstadoPlan.Visible = false;
+                ddlAprendizFicha.Visible = false;
+                ddlInstructor.Visible = false;
+
+                txtFechaAsignacion.Visible = false;
+                txtFechaLimite.Visible = false;
+                txtActividades.Visible = false;
+                txtObservaciones.Visible = false;
+            }
             if (!IsPostBack)
             {
                 CargarTipoPlan();
@@ -29,8 +46,57 @@ namespace PlanMejoramiento.Vista
 
         private void Listar()
         {
-            gvPlanes.DataSource =
-                logica.Listar();
+            int rol =
+                Convert.ToInt32(
+                    Session["IdRol"]);
+
+            int idUsuario =
+                Convert.ToInt32(
+                    Session["IdUsuario"]);
+
+            // ADMINISTRADOR
+            if (rol == 1)
+            {
+                gvPlanes.DataSource =
+                    logica.Listar();
+            }
+
+            // INSTRUCTOR
+            else if (rol == 2)
+            {
+                InstructorL instructorL =
+                    new InstructorL();
+
+                int idInstructor =
+                    instructorL.ObtenerIdPorUsuario(
+                        idUsuario);
+
+                gvPlanes.DataSource =
+                    logica.ListarPorInstructor(
+                        idInstructor);
+            }
+
+            // APRENDIZ
+            else if (rol == 3)
+            {
+                AprendizL aprendizL =
+                    new AprendizL();
+
+                int idAprendiz =
+                    aprendizL.ObtenerIdPorUsuario(
+                        idUsuario);
+
+                gvPlanes.DataSource =
+                    logica.ListarPorAprendiz(
+                        idAprendiz);
+            }
+
+            // GESTIÓN ACADÉMICA
+            else if (rol == 4)
+            {
+                gvPlanes.DataSource =
+                    logica.Listar();
+            }
 
             gvPlanes.DataBind();
         }

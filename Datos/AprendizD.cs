@@ -410,5 +410,41 @@ namespace PlanMejoramiento.Datos
             }
         }
 
+        public int ObtenerIdPorUsuario(
+    int idUsuario)
+        {
+            int idAprendiz = 0;
+
+            using (SqlConnection cn =
+                ConexionDB.MtAbrirConexion())
+            {
+                cn.Open();
+
+                string sql = @"
+        SELECT IdAprendiz
+        FROM Aprendiz
+        WHERE IdUsuario = @IdUsuario";
+
+                SqlCommand cmd =
+                    new SqlCommand(sql, cn);
+
+                cmd.Parameters.AddWithValue(
+                    "@IdUsuario",
+                    idUsuario);
+
+                object resultado =
+                    cmd.ExecuteScalar();
+
+                if (resultado != null)
+                {
+                    idAprendiz =
+                        Convert.ToInt32(
+                            resultado);
+                }
+            }
+
+            return idAprendiz;
+        }
+
     }
 }

@@ -17,6 +17,39 @@ namespace PlanMejoramiento.Vista
             object sender,
             EventArgs e)
         {
+            int rol =
+    Convert.ToInt32(
+        Session["IdRol"]);
+            if (rol == 3)
+            {
+                ddlPlan.Visible = false;
+
+                txtObservacion.Visible = false;
+
+                lblObservacion.Visible = false;
+            }
+            if (rol == 2)
+            {
+                fuArchivo.Visible = false;
+
+                txtNombreArchivo.Visible = false;
+
+                lblNombreArchivo.Visible = false;
+
+                lblArchivo.Visible = false;
+            }
+            if (rol == 4)
+            {
+                btnGuardar.Visible = false;
+
+                fuArchivo.Visible = false;
+
+                txtNombreArchivo.Visible = false;
+
+                txtObservacion.Visible = false;
+
+                ddlPlan.Visible = false;
+            }
             if (!IsPostBack)
             {
                 CargarPlanes();
@@ -43,8 +76,57 @@ namespace PlanMejoramiento.Vista
 
         private void Listar()
         {
-            gvEvidencias.DataSource =
-                logica.Listar();
+            int rol =
+                Convert.ToInt32(
+                    Session["IdRol"]);
+
+            int idUsuario =
+                Convert.ToInt32(
+                    Session["IdUsuario"]);
+
+            // ADMINISTRADOR
+            if (rol == 1)
+            {
+                gvEvidencias.DataSource =
+                    logica.Listar();
+            }
+
+            // INSTRUCTOR
+            else if (rol == 2)
+            {
+                InstructorL instructorL =
+                    new InstructorL();
+
+                int idInstructor =
+                    instructorL.ObtenerIdPorUsuario(
+                        idUsuario);
+
+                gvEvidencias.DataSource =
+                    logica.ListarPorInstructor(
+                        idInstructor);
+            }
+
+            // APRENDIZ
+            else if (rol == 3)
+            {
+                AprendizL aprendizL =
+                    new AprendizL();
+
+                int idAprendiz =
+                    aprendizL.ObtenerIdPorUsuario(
+                        idUsuario);
+
+                gvEvidencias.DataSource =
+                    logica.ListarPorAprendiz(
+                        idAprendiz);
+            }
+
+            // GESTIÓN ACADÉMICA
+            else if (rol == 4)
+            {
+                gvEvidencias.DataSource =
+                    logica.Listar();
+            }
 
             gvEvidencias.DataBind();
         }
